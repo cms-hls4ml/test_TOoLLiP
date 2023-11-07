@@ -19,7 +19,7 @@ all: $(ALL_VERSIONS) main.o
 install: all
 	@rm -rf $(PREFIX)/lib64
 	@mkdir -p $(PREFIX)/lib64
-	cp GTADModel_v3*.so $(PREFIX)/lib64
+	cp GTADModel_*.so $(PREFIX)/lib64
 
 %.so:
 	$(MAKE) -C $(@D) INCLUDES="$(INCLUDES)" LD_FLAGS="$(LD_FLAGS)" CXXFLAGS="$(CXXFLAGS)"
@@ -28,4 +28,4 @@ main.o: main.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $(LD_FLAGS) $< -o $@
 
 clean:
-	rm GTADModel_v3*.so main.o $(ALL_VERSIONS)
+	rm GTADModel_*.so main.o $(ALL_VERSIONS)

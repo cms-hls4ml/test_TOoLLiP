@@ -5,7 +5,7 @@
 
 int main()
 {
-  std::string modelName = "GTADModel_v1";
+  std::string modelName = "GTADModel_v3";
   hls4mlEmulator::ModelLoader loader = hls4mlEmulator::ModelLoader(modelName);
   std::shared_ptr<hls4mlEmulator::Model> model = loader.load_model();
 
