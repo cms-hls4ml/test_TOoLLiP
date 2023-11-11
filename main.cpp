@@ -17,8 +17,9 @@ int main()
   }
   std::cout << "]" << std::endl;
   
-  std::array<ap_fixed<10,7>,13> modelResult;
-  for (int i = 0; i < 13; i++) {
+  std::array<ap_fixed<10,7, AP_RND_CONV,AP_SAT>,8> modelResult; //changed from   std::array<ap_fixed<10,7>,13> modelResult for v3
+  // for (int i = 0; i < 13; i++) {
+  for (int i = 0; i < 8; i++) {
     modelResult[i] = -1;
   }
   ap_ufixed<18,14> modelLoss;
@@ -29,15 +30,22 @@ int main()
   auto pairResult = std::make_pair(modelResult, modelLoss);
 
   std::cout << "pairResult before read = [";
-  for (int i = 0; i < 13; i++){
+  // for (int i = 0; i < 13; i++){ //v1
+  for (int i = 0; i < 8; i++){ //v3
     std::cout << pairResult.first[i] << ", ";
   }
   std::cout << "], " << pairResult.second << std::endl;
-  
-  model->read_result(&pairResult);
 
+  std::cout << "Type of pairResult.first: " << typeid(pairResult.first).name() << std::endl;
+  std::cout << "Type of pairResult.second: " << typeid(pairResult.second).name() << std::endl;
+  std::cout << "reading result..." << std::endl;
+  model->read_result(&pairResult);
+  std::cout << "DONE..." << std::endl;
+
+  
   std::cout << "pairResult after read = [";
-  for (int i = 0; i < 13; i++){
+  // for (int i = 0; i < 13; i++){
+  for (int i = 0; i < 8; i++){
     std::cout << pairResult.first[i] << ", ";
   }
   std::cout << "], " << pairResult.second << std::endl;
