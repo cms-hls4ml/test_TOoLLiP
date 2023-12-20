@@ -1,13 +1,13 @@
 CPP_STANDARD := c++17
 CXXFLAGS := -O3 -fPIC -std=$(CPP_STANDARD)
 PREFIX:=.
-EMULATOR_EXTRAS := /cvmfs/cms.cern.ch/el8_amd64_gcc11/external/hls4mlEmulatorExtras/1.1.1-6933fcc7cdb4cdd5a649bd6579151d1b/
+EMULATOR_EXTRAS := ../hls4mlEmulatorExtras
 AP_TYPES := $(EMULATOR_EXTRAS)/include/ap_types
-HLS_ROOT := /cvmfs/cms.cern.ch/el8_amd64_gcc11/external/hls/2019.08-fd724004387c2a6770dc3517446d30d9
+HLS_ROOT := ../hls
 HLS4ML_INCLUDE := $(EMULATOR_EXTRAS)/include/hls4ml
 INCLUDES := -I$(HLS4ML_INCLUDE) -I$(AP_TYPES) -I$(HLS_ROOT)/include
 LD_FLAGS := -L$(EMULATOR_EXTRAS)/lib64 -lemulator_interface -ldl
-ALL_VERSIONS:=AXOL1TL/AXOL1TL_v3/GTADModel_v3.so
+ALL_VERSIONS:=../L1METML/L1METML_v1/L1METML_v1.so
 
 .DEFAULT_GOAL := all
 .PHONY: all clean install
@@ -19,7 +19,7 @@ all: $(ALL_VERSIONS) main.o
 install: all
 	@rm -rf $(PREFIX)/lib64
 	@mkdir -p $(PREFIX)/lib64
-	cp GTADModel_*.so $(PREFIX)/lib64
+	cp L1METML_*.so $(PREFIX)/lib64
 
 %.so:
 	$(MAKE) -C $(@D) INCLUDES="$(INCLUDES)" LD_FLAGS="$(LD_FLAGS)" CXXFLAGS="$(CXXFLAGS)"
@@ -28,4 +28,4 @@ main.o: main.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $(LD_FLAGS) $< -o $@
 
 clean:
-	rm GTADModel_*.so main.o $(ALL_VERSIONS)
+	rm L1METML_*.so main.o $(ALL_VERSIONS)
